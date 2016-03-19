@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccb_api>
+    <request>
+        <parameters>
+            <argument value="custom_field_labels" name="srv"/>
+        </parameters>
+    </request>
+</ccb_api>

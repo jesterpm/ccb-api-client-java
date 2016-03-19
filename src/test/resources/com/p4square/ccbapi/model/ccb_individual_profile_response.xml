@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccb_api>
+    <request>
+        <parameters>
+            <argument value="individual_profile_from_id" name="srv"/>
+            <argument value="48" name="individual_id"/>
+        </parameters>
+    </request>
+    <response>
+        <service>individual_profile_from_id</service>
+        <service_action>execute</service_action>
+        <availability>public</availability>
+        <individuals count="1">
+            <individual id="48">
+                <sync_id>123</sync_id>
+                <other_id>456</other_id>
+                <giving_number>ABC123</giving_number>
+                <campus id="1">Church of Cucumbers</campus>
+                <family id="36">The Bob Family</family>
+                <family_image>https://cdn3.ccbchurch.com/preSTABLE/images/group-default.gif</family_image>
+                <family_position>Primary Contact</family_position>
+                <family_members>
+                     <family_member>
+                          <individual id="49">Mrs. Bob</individual>
+                          <family_position>Spouse</family_position>
+                     </family_member>
+                </family_members>
+                <first_name>Larry</first_name>
+                <last_name>Bob</last_name>
+                <middle_name></middle_name>
+                <legal_first_name>Larabar</legal_first_name>
+                <full_name>Larry Bob</full_name>
+                <salutation>Mr.</salutation>
+                <suffix></suffix>
+                <image>https://cdn3.ccbchurch.com/preSTABLE/images/profile-default.gif</image>
+                <email>tsebastian@churchcommunitybuilder.com</email>
+                <allergies></allergies>
+                <confirmed_no_allergies>true</confirmed_no_allergies>
+                <addresses>
+                    <address type="mailing">
+                        <street_address>1234 Village St.</street_address>
+                        <city>Denver</city>
+                        <state>CO</state>
+                        <zip>12345</zip>
+                        <country code="US">United States</country>
+                        <line_1>1234 Village St.</line_1>
+                        <line_2>Denver, CO 12345</line_2>
+                        <latitude></latitude>
+                        <longitude></longitude>
+                    </address>
+                    <address type="home">
+                        <street_address></street_address>
+                        <city></city>
+                        <state></state>
+                        <zip></zip>
+                        <country code=""> </country>
+                        <line_1></line_1>
+                        <line_2></line_2>
+                    </address>
+                    <address type="work">
+                        <street_address></street_address>
+                        <city></city>
+                        <state></state>
+                        <zip></zip>
+                        <country code=""> </country>
+                        <line_1></line_1>
+                        <line_2></line_2>
+                    </address>
+                    <address type="other">
+                        <street_address></street_address>
+                        <city></city>
+                        <state></state>
+                        <zip></zip>
+                        <country code=""> </country>
+                        <line_1></line_1>
+                        <line_2></line_2>
+                    </address>
+                </addresses>
+                <phones>
+                    <phone type="contact">(098) 765-4321</phone>
+                    <phone type="home"></phone>
+                    <phone type="work"></phone>
+                    <phone type="mobile"></phone>
+                </phones>
+                <mobile_carrier id="0"> </mobile_carrier>
+                <gender>M</gender>
+                <marital_status></marital_status>
+                <birthday>1990-04-05</birthday>
+                <anniversary></anniversary>
+                <baptized>false</baptized>
+                <deceased></deceased>
+                <membership_type id=""> </membership_type>
+                <membership_date></membership_date>
+                <membership_end></membership_end>
+                <receive_email_from_church>true</receive_email_from_church>
+                <default_new_group_messages>Group Default</default_new_group_messages>
+                <default_new_group_comments>Group Default</default_new_group_comments>
+                <default_new_group_digest>Group Default</default_new_group_digest>
+                <default_new_group_sms>Never</default_new_group_sms>
+                <privacy_settings>
+                    <profile_listed>true</profile_listed>
+                    <mailing_address id="2">My Friends</mailing_address>
+                    <home_address id="2">My Friends</home_address>
+                    <contact_phone id="3">My Friends and Group Members</contact_phone>
+                    <home_phone id="3">My Friends and Group Members</home_phone>
+                    <work_phone id="2">My Friends</work_phone>
+                    <mobile_phone id="2">My Friends</mobile_phone>
+                    <emergency_phone id="2">My Friends</emergency_phone>
+                    <birthday id="4">Everyone</birthday>
+                    <anniversary id="4">Everyone</anniversary>
+                    <gender id="4">Everyone</gender>
+                    <marital_status id="2">My Friends</marital_status>
+                    <user_defined_fields id="2">My Friends</user_defined_fields>
+                    <allergies id="1">Church Leadership</allergies>
+                </privacy_settings>
+                <active>true</active>
+                <creator id="1">Larry Cucumber</creator>
+                <modifier id="1">Larry Cucumber</modifier>
+                <created>2012-09-25 15:29:15</created>
+                <modified>2012-09-25 15:30:50</modified>
+                <user_defined_text_fields>
+                     <user_defined_text_field>
+                          <name>udf_text_12</name>
+                          <label>Test</label>
+                          <text>Test Value</text>
+                          <admin_only>false</admin_only>
+                     </user_defined_text_field>
+                </user_defined_text_fields>
+                <user_defined_date_fields>
+                     <user_defined_date_field>
+                          <name>udf_date_6</name>
+                          <label>Test Date</label>
+                          <date>2016-03-16</date>
+                          <admin_only>false</admin_only>
+                     </user_defined_date_field>
+                </user_defined_date_fields>
+                <user_defined_pulldown_fields>
+                     <user_defined_pulldown_field>
+                          <name>udf_pulldown_6</name>
+                          <label>Level</label>
+                          <selection id="3">Disciple</selection>
+                          <admin_only>false</admin_only>
+                     </user_defined_pulldown_field>
+                </user_defined_pulldown_fields>
+
+            </individual>
+        </individuals>
+    </response>
+</ccb_api>

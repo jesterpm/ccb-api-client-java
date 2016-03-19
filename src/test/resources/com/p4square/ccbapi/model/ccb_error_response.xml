@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccb_api>
+     <request>
+          <parameters>
+               <argument value="custom_field_labels" name="srv"/>
+          </parameters>
+     </request>
+     <response>
+          <errors>
+               <error number="002" type="Service Permission">Invalid username or password.</error>
+          </errors>
+     </response>
+</ccb_api>

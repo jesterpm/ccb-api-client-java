@@ -23,32 +23,32 @@ if the one you need is missing.
 1. Create a single instance of CCBAPIClient for your application.
 CCBAPIClient is thread-safe and manages its own pool of HTTP connections.
 
-```java
-CCBAPI ccbClient = new CCBAPIClient("mychurch", "myuser", "mypassword");
-```
+   ```java
+   CCBAPI ccbClient = new CCBAPIClient("mychurch", "myuser", "mypassword");
+   ```
 
 2. Call the necessary APIs. For example, to get an individual by id:
 
-```java
-try {
-    GetIndividualProfilesRequest request = new GetIndividualProfilesRequest()
-            .withIndividualId(48);
-    GetIndividualProfilesResponse response = mAPI.getIndividualProfiles(request);
-} catch (CCBRetryableErrorException e) {
-    // TODO: Retry if necessary with an appropriate back-off.
-} catch (CCBErrorResponseException e) {
-    // TODO: Optionally handle error responses from CCB differently than below.
-} catch (IOException e) {
-    // TODO: Handle other errors.
-}
-```
+   ```java
+   try {
+       GetIndividualProfilesRequest request = new GetIndividualProfilesRequest()
+               .withIndividualId(48);
+       GetIndividualProfilesResponse response = mAPI.getIndividualProfiles(request);
+   } catch (CCBRetryableErrorException e) {
+       // TODO: Retry if necessary with an appropriate back-off.
+   } catch (CCBErrorResponseException e) {
+       // TODO: Optionally handle error responses from CCB differently than below.
+   } catch (IOException e) {
+       // TODO: Handle other errors.
+   }
+   ```
 
 3. Do something useful with the responses from CCB.
 
-```java
-IndividualProfile profile = response.getIndividuals().get(0);
-System.out.println(profile.getFullName());
-```
+   ```java
+   IndividualProfile profile = response.getIndividuals().get(0);
+   System.out.println(profile.getFullName());
+   ```
 
 ## Contributing
 
@@ -68,13 +68,13 @@ System.out.println(profile.getFullName());
    part. For an example see [GetCustomFieldLabelsResponse.java](src/main/java/com/p4square/ccbapi/model/GetCustomFieldLabelsResponse.java)
    and [CustomField.java](src/main/java/com/p4square/ccbapi/model/CustomField.java).
 
-3. Add tests for binding the models.
+3. Add tests for binding the models:
 
     1. Create an XML file from the sample response in the API documentation.
-       For an example, see [ccb_custom_field_labels_response.xml](src/test/resources/com/p4square/ccbapi/model/ccb_custom_field_labels_response.xml)
+       For an example, see [ccb_custom_field_labels_response.xml](src/test/resources/com/p4square/ccbapi/model/ccb_custom_field_labels_response.xml).
 
     2. Add a test to verify all the fields bind correctly.
-       See [GetCustomFieldLabelsResponseTest.java](src/test/java/com/p4square/ccbapi/model/GetCustomFieldLabelsResponseTest.java)
+       See [GetCustomFieldLabelsResponseTest.java](src/test/java/com/p4square/ccbapi/model/GetCustomFieldLabelsResponseTest.java).
 
 4. Add methods for the new service to [CCBAPI.java](src/main/java/com/p4square/ccbapi/CCBAPI.java)
    and [CCBAPIClient.java](src/main/java/com/p4square/ccbapi/CCBAPIClient.java).

@@ -142,7 +142,8 @@ public class CCBAPIClientTest {
         EasyMock.replay(mockHttpClient);
 
         // Test individual_profile_from_login_password.
-        GetIndividualProfilesRequest request = new GetIndividualProfilesRequest().withLoginPassword("user", "pass");
+        GetIndividualProfilesRequest request = new GetIndividualProfilesRequest()
+                .withLoginPassword("user", "pass".toCharArray());
         GetIndividualProfilesResponse response = client.getIndividualProfiles(request);
 
         // Verify results.

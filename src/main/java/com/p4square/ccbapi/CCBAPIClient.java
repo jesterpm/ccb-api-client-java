@@ -81,7 +81,19 @@ public class CCBAPIClient implements CCBAPI {
             // Use individual_profile_from_login_password (login, password)
             serviceName = "individual_profile_from_login_password";
             params.put("login", request.getLogin());
-            params.put("password", request.getPassword());
+            /*
+                TODO: Don't convert password char[] to String.
+                The whole purpose behind keeping the password in a char[] is
+                so that it can be zeroed out in the heap when its no longer
+                needed.
+                Unfortunately Church Community Builder decided to send the
+                user's password, among other sensitive fields, as a query
+                parameter. Since the query string has to be a String, I'll go
+                ahead and convert the password to String here.
+                The library's public interface will use char[] to make the
+                switch easier if CCB provides a more sane alternative.
+             */
+            params.put("password", new String(request.getPassword()));
 
         } else if (request.getRoutingNumber() != null && request.getAccountNumber() != null) {
             // Use individual_profile_from_micr (account_number, routing_number)

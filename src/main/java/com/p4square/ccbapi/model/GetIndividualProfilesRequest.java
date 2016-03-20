@@ -1,6 +1,7 @@
 package com.p4square.ccbapi.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 /**
  * GetIndividualProfilesRequest is the set of options for retrieving individual profiles.
@@ -18,7 +19,7 @@ public class GetIndividualProfilesRequest {
 
     // Used with individual_profile_from_login_password
     private String login;
-    private String password;
+    private char[] password;
 
     // Used with individual_profile_from_micr
     private String routingNumber;
@@ -31,7 +32,7 @@ public class GetIndividualProfilesRequest {
     /**
      * Request the IndividualProfile for the given individual id.
      *
-     * This option is mutually exclusive with {@link #withLoginPassword(String, String)}
+     * This option is mutually exclusive with {@link #withLoginPassword(String, char[])}
      * and {@link #withMICR(String, String)}.
      *
      * @param id The id.
@@ -39,7 +40,8 @@ public class GetIndividualProfilesRequest {
      */
     public GetIndividualProfilesRequest withIndividualId(final int id) {
         this.id = id;
-        this.login = this.password = this.accountNumber = this.routingNumber = null;
+        this.password = new char[0];
+        this.login = this.accountNumber = this.routingNumber = null;
         return this;
     }
 
@@ -47,7 +49,7 @@ public class GetIndividualProfilesRequest {
         return login;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
@@ -61,7 +63,7 @@ public class GetIndividualProfilesRequest {
      * @param password The individual's password.
      * @return this.
      */
-    public GetIndividualProfilesRequest withLoginPassword(final String login, final String password) {
+    public GetIndividualProfilesRequest withLoginPassword(final String login, final char[] password) {
         this.login = login;
         this.password = password;
         this.id = 0;
@@ -81,7 +83,7 @@ public class GetIndividualProfilesRequest {
      * Request the IndividualProfile for the given bank account information.
      *
      * This option is mutually exclusive with {@link #withIndividualId(int)}
-     * and {@link #withLoginPassword(String, String)}.
+     * and {@link #withLoginPassword(String, char[])}.
      *
      * @param routingNumber The individual's bank routing number.
      * @param accountNumber The individual's bank account number.
@@ -155,5 +157,63 @@ public class GetIndividualProfilesRequest {
     public GetIndividualProfilesRequest withPerPage(int perPage) {
         this.perPage = perPage;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        GetIndividualProfilesRequest that = (GetIndividualProfilesRequest) o;
+
+        if (getPage() != that.getPage()) {
+            return false;
+        }
+        if (getPerPage() != that.getPerPage()) {
+            return false;
+        }
+        if (getId() != that.getId()) {
+            return false;
+        }
+        if (getModifiedSince() != null ?
+                !getModifiedSince().equals(that.getModifiedSince()) : that.getModifiedSince() != null) {
+            return false;
+        }
+        if (getIncludeInactive() != null ?
+                !getIncludeInactive().equals(that.getIncludeInactive()) : that.getIncludeInactive() != null) {
+            return false;
+        }
+        if (getLogin() != null ?
+                !getLogin().equals(that.getLogin()) : that.getLogin() != null) {
+            return false;
+        }
+        if (getPassword() != null ? !Arrays.equals(getPassword(), that.getPassword()) : that.getPassword() != null) {
+            return false;
+        }
+        if (getRoutingNumber() != null ?
+                !getRoutingNumber().equals(that.getRoutingNumber()) : that.getRoutingNumber() != null) {
+            return false;
+        }
+
+        return getAccountNumber() != null ?
+                getAccountNumber().equals(that.getAccountNumber()) : that.getAccountNumber() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getModifiedSince() != null ? getModifiedSince().hashCode() : 0;
+        result = 31 * result + (getIncludeInactive() != null ? getIncludeInactive().hashCode() : 0);
+        result = 31 * result + getPage();
+        result = 31 * result + getPerPage();
+        result = 31 * result + getId();
+        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? Arrays.hashCode(getPassword()) : 0);
+        result = 31 * result + (getRoutingNumber() != null ? getRoutingNumber().hashCode() : 0);
+        result = 31 * result + (getAccountNumber() != null ? getAccountNumber().hashCode() : 0);
+        return result;
     }
 }

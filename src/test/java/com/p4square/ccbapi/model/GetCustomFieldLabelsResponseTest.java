@@ -14,7 +14,7 @@ public class GetCustomFieldLabelsResponseTest extends XmlBinderTestBase {
      */
     @Test
     public void testGetCustomFieldLabelsResponse() throws Exception {
-        final GetCustomFieldLabelsResponse response = parseFile("ccb_custom_labels_response.xml",
+        final GetCustomFieldLabelsResponse response = parseFile("ccb_custom_field_labels_response.xml",
                 GetCustomFieldLabelsResponse.class);
 
         assertNull("Response should not have errors", response.getErrors());

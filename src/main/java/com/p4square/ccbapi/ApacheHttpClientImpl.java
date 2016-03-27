@@ -59,7 +59,9 @@ public class ApacheHttpClientImpl implements HTTPInterface {
         final HttpPost httpPost = new HttpPost(uri);
 
         if (form != null) {
-            httpPost.setEntity(new ByteArrayEntity(form));
+            final ByteArrayEntity entity = new ByteArrayEntity(form);
+            entity.setContentType("application/x-www-form-urlencoded");
+            httpPost.setEntity(entity);
         }
 
         // Make the request.

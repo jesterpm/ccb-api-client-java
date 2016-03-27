@@ -9,6 +9,8 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -52,14 +54,13 @@ public class ApacheHttpClientImpl implements HTTPInterface {
     }
 
     @Override
-    public InputStream sendPostRequest(URI uri, Map<String, String> form) throws IOException {
+    public InputStream sendPostRequest(final URI uri, final byte[] form) throws IOException {
         // Build the request.
         final HttpPost httpPost = new HttpPost(uri);
-        final List<NameValuePair> formParameters = new ArrayList<>();
-        for (Map.Entry<String, String> entry : form.entrySet()) {
-            formParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+
+        if (form != null) {
+            httpPost.setEntity(new ByteArrayEntity(form));
         }
-        httpPost.setEntity(new UrlEncodedFormEntity(formParameters));
 
         // Make the request.
         final HttpResponse response = httpClient.execute(httpPost);

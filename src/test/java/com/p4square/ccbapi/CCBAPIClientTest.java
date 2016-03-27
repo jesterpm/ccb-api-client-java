@@ -2,9 +2,7 @@ package com.p4square.ccbapi;
 
 import com.p4square.ccbapi.exception.CCBErrorResponseException;
 import com.p4square.ccbapi.exception.CCBRetryableErrorException;
-import com.p4square.ccbapi.model.GetCustomFieldLabelsResponse;
-import com.p4square.ccbapi.model.GetIndividualProfilesRequest;
-import com.p4square.ccbapi.model.GetIndividualProfilesResponse;
+import com.p4square.ccbapi.model.*;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -16,6 +14,7 @@ import java.util.Map;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
@@ -51,7 +50,7 @@ public class CCBAPIClientTest {
         // Set expectation.
         URI expectedURI = new URI("https://localhost:8080/api.php?srv=custom_field_labels");
         InputStream is = getClass().getResourceAsStream("model/ccb_custom_field_labels_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -72,7 +71,7 @@ public class CCBAPIClientTest {
         // Set expectation.
         URI expectedURI = new URI("https://localhost:8080/api.php?srv=custom_field_labels");
         InputStream is = getClass().getResourceAsStream("model/ccb_error_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -92,7 +91,7 @@ public class CCBAPIClientTest {
     @Test(expected = CCBRetryableErrorException.class)
     public void testGetCustomFieldLabelsTimeout() throws Exception {
         // Setup mocks.
-        EasyMock.expect(mockHttpClient.sendPostRequest(EasyMock.anyObject(URI.class), EasyMock.anyObject(Map.class)))
+        EasyMock.expect(mockHttpClient.sendPostRequest(EasyMock.anyObject(URI.class), EasyMock.anyObject()))
                 .andThrow(new CCBRetryableErrorException("Retryable error"));
         EasyMock.replay(mockHttpClient);
 
@@ -103,7 +102,7 @@ public class CCBAPIClientTest {
     @Test(expected = IOException.class)
     public void testGetCustomFieldLabelsException() throws Exception {
         // Setup mocks.
-        EasyMock.expect(mockHttpClient.sendPostRequest(EasyMock.anyObject(URI.class), EasyMock.anyObject(Map.class)))
+        EasyMock.expect(mockHttpClient.sendPostRequest(EasyMock.anyObject(URI.class), EasyMock.anyObject()))
                 .andThrow(new IOException());
         EasyMock.replay(mockHttpClient);
 
@@ -116,7 +115,7 @@ public class CCBAPIClientTest {
         // Set expectation.
         URI expectedURI = new URI("https://localhost:8080/api.php?srv=individual_profile_from_id&individual_id=48");
         InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -137,7 +136,7 @@ public class CCBAPIClientTest {
         URI expectedURI = new URI("https://localhost:8080/api.php?"
                 + "srv=individual_profile_from_login_password&password=pass&login=user");
         InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -159,7 +158,7 @@ public class CCBAPIClientTest {
         URI expectedURI = new URI("https://localhost:8080/api.php?"
                 + "srv=individual_profile_from_micr&account_number=4567&routing_number=1234");
         InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -179,7 +178,7 @@ public class CCBAPIClientTest {
         // Set expectation.
         URI expectedURI = new URI("https://localhost:8080/api.php?srv=individual_profiles");
         InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -200,7 +199,7 @@ public class CCBAPIClientTest {
         URI expectedURI = new URI("https://localhost:8080/api.php?srv=individual_profiles"
                 + "&per_page=15&include_inactive=true&modified_since=2016-03-19&page=5");
         InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, Collections.<String, String>emptyMap()))
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 
@@ -217,6 +216,46 @@ public class CCBAPIClientTest {
         assertNull(response.getErrors());
         assertEquals(1, response.getIndividuals().size());
         assertEquals(48, response.getIndividuals().get(0).getId());
+    }
+
+    @Test
+    public void testUpdateIndividual() throws Exception {
+        // Set expectation.
+        URI expectedURI = new URI("https://localhost:8080/api.php?srv=update_individual&individual_id=48");
+        InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
+        EasyMock.expect(mockHttpClient.sendPostRequest(EasyMock.eq(expectedURI),
+                    EasyMock.aryEq("legal_first_name=Larabar".getBytes("UTF-8"))))
+                .andReturn(is);
+        EasyMock.replay(mockHttpClient);
+
+        UpdateIndividualProfileRequest request = new UpdateIndividualProfileRequest()
+                .withIndividualId(48)
+                .withLegalFirstName("Larabar");
+
+        // Test update_individual.
+        UpdateIndividualProfileResponse response = client.updateIndividualProfile(request);
+
+        // Verify results.
+        EasyMock.verify(mockHttpClient);
+        assertNull(response.getErrors());
+        assertEquals(1, response.getIndividuals().size());
+        assertEquals(48, response.getIndividuals().get(0).getId());
+    }
+
+    /**
+     * This test ensures {@link CCBAPIClient#updateIndividualProfile(UpdateIndividualProfileRequest)}
+     * throws an exception if the individualId property isn't set on the request.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateIndividualWithoutIndividualId() throws Exception {
+        // Set expectation.
+        UpdateIndividualProfileRequest request = new UpdateIndividualProfileRequest()
+                .withLegalFirstName("Larabar");
+
+        // Test update_individual.
+        UpdateIndividualProfileResponse response = client.updateIndividualProfile(request);
+
+       // Expect exception.
     }
 
     /**

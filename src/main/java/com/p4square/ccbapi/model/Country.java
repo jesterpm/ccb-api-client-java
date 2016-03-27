@@ -16,6 +16,30 @@ public class Country {
     private String name;
 
     /**
+     * Default Country constructor.
+     */
+    public Country() {
+
+    }
+
+    /**
+     * This package-private Country constructor is used to create the
+     * constants in the {@link Countries} class.
+     *
+     * Usually the country name cannot be set except when binding to
+     * responses from CCB. This constructor is an exception so that the
+     * constants in {@link Countries} can be provide with
+     * <strong>known</strong> values used by CCB.
+     *
+     * @param code The two letter country code.
+     * @param name The country name as typically presented by CCB.
+     */
+    Country(final String code, final String name) {
+        setCountryCode(code);
+        this.name = name;
+    }
+
+    /**
      * @return The two letter country code.
      */
     public String getCountryCode() {

@@ -24,11 +24,11 @@ public interface HTTPInterface extends Closeable {
      * The form data for the request is specified in the form Map.
      *
      * @param uri The URI to request.
-     * @param form Map of key/value pairs to send as form data.
+     * @param form Form data or null.
      * @return The response received.
      * @throws com.p4square.ccbapi.exception.CCBRetryableErrorException
      * @throws CCBRetryableErrorException if a retryable error occurs.
      * @throws IOException If a non-retryable error occurs.
      */
-    InputStream sendPostRequest(URI uri, Map<String, String> form) throws IOException;
+    InputStream sendPostRequest(URI uri, byte[] form) throws IOException;
 }

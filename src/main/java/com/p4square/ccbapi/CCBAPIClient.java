@@ -2,11 +2,15 @@ package com.p4square.ccbapi;
 
 import com.p4square.ccbapi.exception.CCBErrorResponseException;
 import com.p4square.ccbapi.model.*;
+import com.p4square.ccbapi.serializer.AddressFormSerializer;
+import com.p4square.ccbapi.serializer.IndividualProfileSerializer;
+import com.p4square.ccbapi.serializer.PhoneFormSerializer;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +26,8 @@ import java.util.Map;
 public class CCBAPIClient implements CCBAPI {
 
     private static final Map<String, String> EMPTY_MAP = Collections.emptyMap();
+
+    private static final IndividualProfileSerializer INDIVIDUAL_PROFILE_SERIALIZER = new IndividualProfileSerializer();
 
     private final URI apiBaseUri;
     private final HTTPInterface httpClient;
@@ -119,12 +125,27 @@ public class CCBAPIClient implements CCBAPI {
         }
 
         // Send the request and parse the response.
-        return makeRequest(serviceName, params, EMPTY_MAP, GetIndividualProfilesResponse.class);
+        return makeRequest(serviceName, params, null, GetIndividualProfilesResponse.class);
     }
 
     @Override
     public GetCustomFieldLabelsResponse getCustomFieldLabels() throws IOException {
-        return makeRequest("custom_field_labels", EMPTY_MAP, EMPTY_MAP, GetCustomFieldLabelsResponse.class);
+        return makeRequest("custom_field_labels", EMPTY_MAP, null, GetCustomFieldLabelsResponse.class);
+    }
+
+    @Override
+    public UpdateIndividualProfileResponse updateIndividualProfile(UpdateIndividualProfileRequest request)
+            throws IOException {
+
+        if (request.getIndividualId() == 0) {
+            throw new IllegalArgumentException("individualId must be set on the request.");
+        }
+
+        final Map<String, String> params = Collections.singletonMap("individual_id",
+                                                                    String.valueOf(request.getIndividualId()));
+        final String form = INDIVIDUAL_PROFILE_SERIALIZER.encode(request);
+
+        return makeRequest("update_individual", params, form, UpdateIndividualProfileResponse.class);
     }
 
     /**
@@ -164,10 +185,15 @@ public class CCBAPIClient implements CCBAPI {
      * @throws IOException if an error occurs.
      */
     private <T extends CCBAPIResponse> T makeRequest(final String api, final Map<String, String> params,
-                                                     final Map<String, String> form, final Class<T> clazz)
+                                                     final String form, final Class<T> clazz)
             throws IOException {
 
-        final InputStream entity = httpClient.sendPostRequest(makeURI(api, params), form);
+        byte[] payload = null;
+        if (form != null) {
+            payload = form.getBytes(StandardCharsets.UTF_8);
+        }
+
+        final InputStream entity = httpClient.sendPostRequest(makeURI(api, params), payload);
         try {
             T response = xmlBinder.bindResponseXML(entity, clazz);
             if (response.getErrors() != null && response.getErrors().size() > 0) {

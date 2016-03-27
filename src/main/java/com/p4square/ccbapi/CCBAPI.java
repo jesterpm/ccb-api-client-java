@@ -39,4 +39,13 @@ public interface CCBAPI extends Closeable {
      * @throws IOException on failure.
      */
     GetIndividualProfilesResponse getIndividualProfiles(GetIndividualProfilesRequest request) throws IOException;
+
+    /**
+     * Update an IndividualProfile.
+     *
+     * @param request An UpdateIndividualProfileRequest including the fields to modify.
+     * @return An UpdateIndividualProfileResponse, including the updated IndividualProfile.
+     * @throws IOException on failure.
+     */
+    UpdateIndividualProfileResponse updateIndividualProfile(UpdateIndividualProfileRequest request) throws IOException;
 }

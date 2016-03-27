@@ -4,11 +4,11 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
- * GetIndividualProfilesResponse models the response of a variety of APIs which return one or more Individual Profiles.
+ * The response from an update_individual request.
  */
 @XmlRootElement(name="response")
 @XmlAccessorType(XmlAccessType.NONE)
-public class GetIndividualProfilesResponse extends CCBAPIResponse {
+public class UpdateIndividualProfileResponse extends CCBAPIResponse {
 
     @XmlElementWrapper(name = "individuals")
     @XmlElement(name="individual")

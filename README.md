@@ -14,6 +14,8 @@ Only a few services are currently supported. The client currently supports:
 * `individual_profile_from_login_password`
 * `individual_profile_from_micr`
 * `custom_field_labels`
+* `update_individual`
+* List Lookup Tables
 
 Adding new services is relatively easy. Skip down to the Contributing section
 if the one you need is missing.

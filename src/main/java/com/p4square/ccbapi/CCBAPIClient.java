@@ -2,9 +2,7 @@ package com.p4square.ccbapi;
 
 import com.p4square.ccbapi.exception.CCBErrorResponseException;
 import com.p4square.ccbapi.model.*;
-import com.p4square.ccbapi.serializer.AddressFormSerializer;
 import com.p4square.ccbapi.serializer.IndividualProfileSerializer;
-import com.p4square.ccbapi.serializer.PhoneFormSerializer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -131,6 +129,18 @@ public class CCBAPIClient implements CCBAPI {
     @Override
     public GetCustomFieldLabelsResponse getCustomFieldLabels() throws IOException {
         return makeRequest("custom_field_labels", EMPTY_MAP, null, GetCustomFieldLabelsResponse.class);
+    }
+
+    @Override
+    public GetLookupTableResponse getLookupTable(final GetLookupTableRequest request) throws IOException {
+
+        if (request.getType() == null) {
+            throw new IllegalArgumentException("LookupTableType must not be null.");
+        }
+
+        final String service = request.getType().getIdentifier() + "_list";
+
+        return makeRequest(service, EMPTY_MAP, null, GetLookupTableResponse.class);
     }
 
     @Override

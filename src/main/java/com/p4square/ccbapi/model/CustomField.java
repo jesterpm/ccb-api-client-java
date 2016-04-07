@@ -71,4 +71,13 @@ public class CustomField {
     public void setAdminOnly(boolean adminOnly) {
         this.adminOnly = adminOnly;
     }
+
+    @Override
+    public String toString() {
+        return "CustomField::{" +
+                "name='" + name + '\'' +
+                ", label='" + label + '\'' +
+                ", adminOnly=" + adminOnly +
+                '}';
+    }
 }

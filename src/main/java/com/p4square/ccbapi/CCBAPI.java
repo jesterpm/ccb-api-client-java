@@ -18,6 +18,16 @@ public interface CCBAPI extends Closeable {
     GetCustomFieldLabelsResponse getCustomFieldLabels() throws IOException;
 
     /**
+     * Retrieve the list of items in a particular lookup table.
+     *
+     * Lookup tables provide the list of options for various pulldown fields.
+     *
+     * @return A GetLookupTableResponse containing the item ids and labels.
+     * @throws IOException on failure.
+     */
+    GetLookupTableResponse getLookupTable(GetLookupTableRequest request) throws IOException;
+
+    /**
      * Retrieve one or more IndividualProfiles.
      *
      * If any of the following properties are set on the request,

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccb_api>
+     <request>
+          <parameters>
+               <argument value="significant_event_list" name="srv"/>
+          </parameters>
+     </request>
+     <response>
+          <service>significant_event_list</service>
+          <service_action>execute</service_action>
+          <availability>public</availability>
+          <items count="5">
+               <item>
+                    <item_id type="significant_event">1</item_id>
+                    <id>1</id>
+                    <name>High School Graduation</name>
+                    <order>1</order>
+               </item>
+               <item>
+                    <item_id type="significant_event">2</item_id>
+                    <id>2</id>
+                    <name>College Graduation</name>
+                    <order>2</order>
+               </item>
+               <item>
+                    <item_id type="significant_event">3</item_id>
+                    <id>3</id>
+                    <name>Moved Into Town</name>
+                    <order>3</order>
+               </item>
+               <item>
+                    <item_id type="significant_event">4</item_id>
+                    <id>4</id>
+                    <name>Moved Out of Town</name>
+                    <order>4</order>
+               </item>
+               <item>
+                    <item_id type="significant_event">5</item_id>
+                    <id>5</id>
+                    <name>Dedicated at Baby Dedication</name>
+                    <order>5</order>
+               </item>
+          </items>
+     </response>
+</ccb_api>

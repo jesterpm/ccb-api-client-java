@@ -9,12 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Map;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
@@ -108,6 +105,34 @@ public class CCBAPIClientTest {
 
         // Call getCustomFieldLabels() and expect an exception.
         client.getCustomFieldLabels();
+    }
+
+    @Test
+    public void testGetLookupTableListSuccess() throws Exception {
+        // Set expectation.
+        URI expectedURI = new URI("https://localhost:8080/api.php?srv=significant_event_list");
+        InputStream is = getClass().getResourceAsStream("model/ccb_lookup_table_list_response.xml");
+        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
+                .andReturn(is);
+        EasyMock.replay(mockHttpClient);
+
+        // Test significant_event_list.
+        GetLookupTableResponse response = client.getLookupTable(
+                new GetLookupTableRequest().withType(LookupTableType.SIGNIFICANT_EVENT));
+
+        // Verify results.
+        EasyMock.verify(mockHttpClient);
+        assertNull(response.getErrors());
+        assertEquals(5, response.getItems().size());
+        assertEquals(1, response.getItems().get(0).getId());
+        assertEquals(1, response.getItems().get(0).getOrder());
+        assertEquals("High School Graduation", response.getItems().get(0).getName());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetLookupTableListWithNullType() throws Exception {
+        // This should throw an IllegalArgumentException.
+        client.getLookupTable(new GetLookupTableRequest());
     }
 
     @Test

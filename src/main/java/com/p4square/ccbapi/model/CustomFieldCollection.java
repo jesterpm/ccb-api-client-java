@@ -26,7 +26,7 @@ public class CustomFieldCollection<T extends CustomField> implements Collection<
      * @return The entry associated with the field.
      */
     public T getByName(final String name) {
-        return fieldNameToValue.get(name);
+        return fieldNameToValue.get(name.toLowerCase());
     }
 
     /**
@@ -36,7 +36,7 @@ public class CustomFieldCollection<T extends CustomField> implements Collection<
      * @return The entry associated with the field.
      */
     public T getByLabel(final String label) {
-        return fieldLabelToValue.get(label);
+        return fieldLabelToValue.get(label.toLowerCase());
     }
 
     public List<T> asList() {
@@ -76,18 +76,18 @@ public class CustomFieldCollection<T extends CustomField> implements Collection<
     @Override
     public boolean add(final T t) {
         // Clean up overwritten indexes.
-        final T previousValueByName = fieldNameToValue.get(t.getName());
+        final T previousValueByName = fieldNameToValue.get(t.getName().toLowerCase());
         if (previousValueByName != null) {
             remove(previousValueByName);
         }
 
-        final T previousValueByLabel = fieldLabelToValue.get(t.getLabel());
+        final T previousValueByLabel = fieldLabelToValue.get(t.getLabel().toLowerCase());
         if (previousValueByLabel != null) {
             remove(previousValueByLabel);
         }
 
-        fieldNameToValue.put(t.getName(), t);
-        fieldLabelToValue.put(t.getLabel(), t);
+        fieldNameToValue.put(t.getName().toLowerCase(), t);
+        fieldLabelToValue.put(t.getLabel().toLowerCase(), t);
         return values.add(t);
     }
 
@@ -95,8 +95,8 @@ public class CustomFieldCollection<T extends CustomField> implements Collection<
     public boolean remove(final Object o) {
         if (values.remove(o)) {
             final T entry = (T) o;
-            fieldNameToValue.remove(entry.getName());
-            fieldLabelToValue.remove(entry.getLabel());
+            fieldNameToValue.remove(entry.getName().toLowerCase());
+            fieldLabelToValue.remove(entry.getLabel().toLowerCase());
             return true;
         }
         return false;
@@ -132,6 +132,8 @@ public class CustomFieldCollection<T extends CustomField> implements Collection<
 
     @Override
     public void clear() {
+        fieldNameToValue.clear();
+        fieldLabelToValue.clear();
         values.clear();
     }
 }

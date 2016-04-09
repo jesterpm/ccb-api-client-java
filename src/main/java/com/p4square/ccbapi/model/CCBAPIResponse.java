@@ -18,7 +18,7 @@ public abstract class CCBAPIResponse {
     /**
      * Return the error message if present.
      *
-     * @return A CCBErrorResponse if an error occurred. Null if the request was successful.
+     * @return A {@link CCBErrorResponse} if an error occurred. Null if the request was successful.
      */
     public List<CCBErrorResponse> getErrors() {
         return errorResponses;
@@ -27,7 +27,7 @@ public abstract class CCBAPIResponse {
     /**
      * Set the error response.
      *
-     * @param error The CCBErrorResponse to set.
+     * @param errors The list of {@link CCBErrorResponse}s to set.
      */
     public void setErrors(final List<CCBErrorResponse> errors) {
         this.errorResponses = errors;

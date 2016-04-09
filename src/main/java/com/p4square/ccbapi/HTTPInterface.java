@@ -26,7 +26,6 @@ public interface HTTPInterface extends Closeable {
      * @param uri The URI to request.
      * @param form Form data or null.
      * @return The response received.
-     * @throws com.p4square.ccbapi.exception.CCBRetryableErrorException
      * @throws CCBRetryableErrorException if a retryable error occurs.
      * @throws IOException If a non-retryable error occurs.
      */

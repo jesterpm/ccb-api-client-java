@@ -12,7 +12,7 @@ public interface CCBAPI extends Closeable {
     /**
      * Retrieve the set of custom (user-defined) fields and the associated labels.
      *
-     * @return A GetCustomFieldLabelsResponse containing the fields.
+     * @return A {@link GetCustomFieldLabelsResponse} containing the fields.
      * @throws IOException on failure.
      */
     GetCustomFieldLabelsResponse getCustomFieldLabels() throws IOException;
@@ -22,13 +22,14 @@ public interface CCBAPI extends Closeable {
      *
      * Lookup tables provide the list of options for various pulldown fields.
      *
-     * @return A GetLookupTableResponse containing the item ids and labels.
+     * @param request The {@link GetLookupTableRequest} specifying the table type.
+     * @return A {@link GetLookupTableResponse} containing the item ids and labels.
      * @throws IOException on failure.
      */
     GetLookupTableResponse getLookupTable(GetLookupTableRequest request) throws IOException;
 
     /**
-     * Retrieve one or more IndividualProfiles.
+     * Retrieve one or more {@link IndividualProfile}s.
      *
      * If any of the following properties are set on the request,
      * this method will return the matching individual, if one exists.
@@ -44,17 +45,17 @@ public interface CCBAPI extends Closeable {
      *
      * The appropriate CCB API will be selected based on the options used.
      *
-     * @param request A GetIndividualProfilesRequest.
-     * @return A GetIndividualProfilesResponse object on success, including when no individuals match.
+     * @param request A {@link GetIndividualProfilesRequest}.
+     * @return A {@link GetIndividualProfilesResponse} object on success, including when no individuals match.
      * @throws IOException on failure.
      */
     GetIndividualProfilesResponse getIndividualProfiles(GetIndividualProfilesRequest request) throws IOException;
 
     /**
-     * Update an IndividualProfile.
+     * Update an {@link IndividualProfile}.
      *
-     * @param request An UpdateIndividualProfileRequest including the fields to modify.
-     * @return An UpdateIndividualProfileResponse, including the updated IndividualProfile.
+     * @param request An {@link UpdateIndividualProfileRequest} including the fields to modify.
+     * @return An {@link UpdateIndividualProfileResponse}, including the updated IndividualProfile.
      * @throws IOException on failure.
      */
     UpdateIndividualProfileResponse updateIndividualProfile(UpdateIndividualProfileRequest request) throws IOException;

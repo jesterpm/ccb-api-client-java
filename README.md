@@ -22,14 +22,24 @@ if the one you need is missing.
 
 ## Usage
 
-1. Create a single instance of CCBAPIClient for your application.
+1. If you're using Maven or Ivy, add a dependency on the [latest release](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.p4square%22%20AND%20a%3A%22ccbapi%22):
+
+   ```xml
+   <dependency>
+      <groupId>com.p4square</groupId>
+      <artifactId>ccbapi</artifactId>
+      <version>1.0</version>
+  </dependency>
+   ```
+
+2. Create a single instance of CCBAPIClient for your application.
 CCBAPIClient is thread-safe and manages its own pool of HTTP connections.
 
    ```java
    CCBAPI ccbClient = new CCBAPIClient("mychurch", "myuser", "mypassword");
    ```
 
-2. Call the necessary APIs. For example, to get an individual by id:
+3. Call the necessary APIs. For example, to get an individual by id:
 
    ```java
    try {
@@ -45,7 +55,7 @@ CCBAPIClient is thread-safe and manages its own pool of HTTP connections.
    }
    ```
 
-3. Do something useful with the responses from CCB.
+4. Do something useful with the responses from CCB.
 
    ```java
    IndividualProfile profile = response.getIndividuals().get(0);

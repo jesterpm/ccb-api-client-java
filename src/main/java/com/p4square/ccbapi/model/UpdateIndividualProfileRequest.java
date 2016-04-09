@@ -317,10 +317,12 @@ public class UpdateIndividualProfileRequest {
     }
 
     public UpdateIndividualProfileRequest withCustomTextField(final String name, final String value) {
-        if (!CUSTOM_TEXT_FIELD_NAMES.contains(name)) {
-            throw new IllegalArgumentException(name + " is not a valid a valid text field name.");
+        final String transformedName = transformUDFName(name);
+
+        if (!CUSTOM_TEXT_FIELD_NAMES.contains(transformedName)) {
+            throw new IllegalArgumentException(transformedName + " is not a valid a valid text field name.");
         }
-        customTextFields.put(name, value);
+        customTextFields.put(transformedName, value);
         return this;
     }
 
@@ -336,10 +338,12 @@ public class UpdateIndividualProfileRequest {
     }
 
     public UpdateIndividualProfileRequest withCustomDateField(final String name, final LocalDate value) {
-        if (!CUSTOM_DATE_FIELD_NAMES.contains(name)) {
-            throw new IllegalArgumentException(name + " is not a valid a valid date field name.");
+        final String transformedName = transformUDFName(name);
+
+        if (!CUSTOM_DATE_FIELD_NAMES.contains(transformedName)) {
+            throw new IllegalArgumentException(transformedName + " is not a valid a valid date field name.");
         }
-        customDateFields.put(name, value);
+        customDateFields.put(transformedName, value);
         return this;
     }
 
@@ -355,10 +359,12 @@ public class UpdateIndividualProfileRequest {
     }
 
     public UpdateIndividualProfileRequest withCustomPulldownField(final String name, final Integer value) {
-        if (!CUSTOM_PULLDOWN_FIELD_NAMES.contains(name)) {
-            throw new IllegalArgumentException(name + " is not a valid a valid pulldown field name.");
+        final String transformedName = transformUDFName(name);
+
+        if (!CUSTOM_PULLDOWN_FIELD_NAMES.contains(transformedName)) {
+            throw new IllegalArgumentException(transformedName + " is not a valid a valid pulldown field name.");
         }
-        customPulldownFields.put(name, value);
+        customPulldownFields.put(transformedName, value);
         return this;
     }
 
@@ -375,4 +381,19 @@ public class UpdateIndividualProfileRequest {
         return this;
     }
 
+    /**
+     * Normalize a variety forms of custom field names.
+     *
+     * The CCB API isn't particularly consistent about how user-defined fields are identified.
+     * In most cases the fields associated with an individual are prefixed with "udf_ind_",
+     * but when it comes to updating the profile the fields are prefixed with just "udf_".
+     *
+     * This function attempts to transform various forms into the udf_TYPE_ID form.
+     *
+     * @param name A custom field name.
+     * @return A custom field name suitable for the update_individual_profile API.
+     */
+    private String transformUDFName(final String name) {
+        return name.replace("_ind_", "_");
+    }
 }

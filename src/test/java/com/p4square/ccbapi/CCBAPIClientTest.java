@@ -158,10 +158,10 @@ public class CCBAPIClientTest {
     @Test
     public void testGetIndividualProfilesByLogin() throws Exception {
         // Set expectation.
-        URI expectedURI = new URI("https://localhost:8080/api.php?"
-                + "srv=individual_profile_from_login_password&password=pass&login=user");
+        URI expectedURI = new URI("https://localhost:8080/api.php?srv=individual_profile_from_login_password");
+        byte[] expectedForm = "login=user&password=pass".getBytes();
         InputStream is = getClass().getResourceAsStream("model/ccb_individual_profile_response.xml");
-        EasyMock.expect(mockHttpClient.sendPostRequest(expectedURI, null))
+        EasyMock.expect(mockHttpClient.sendPostRequest(EasyMock.eq(expectedURI), EasyMock.aryEq(expectedForm)))
                 .andReturn(is);
         EasyMock.replay(mockHttpClient);
 

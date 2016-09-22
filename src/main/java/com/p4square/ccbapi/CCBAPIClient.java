@@ -2,6 +2,7 @@ package com.p4square.ccbapi;
 
 import com.p4square.ccbapi.exception.CCBErrorResponseException;
 import com.p4square.ccbapi.model.*;
+import com.p4square.ccbapi.serializer.FormBuilder;
 import com.p4square.ccbapi.serializer.IndividualProfileSerializer;
 
 import java.io.IOException;
@@ -76,6 +77,8 @@ public class CCBAPIClient implements CCBAPI {
         // Prepare the request.
         String serviceName;
         final Map<String, String> params = new HashMap<>();
+        String form = null;
+
         if (request.getId() != 0) {
             // Use individual_profile_from_id (individual_id)
             serviceName = "individual_profile_from_id";
@@ -84,20 +87,24 @@ public class CCBAPIClient implements CCBAPI {
         } else if (request.getLogin() != null && request.getPassword() != null) {
             // Use individual_profile_from_login_password (login, password)
             serviceName = "individual_profile_from_login_password";
-            params.put("login", request.getLogin());
+
+            FormBuilder loginform = new FormBuilder();
+            loginform.appendField("login", request.getLogin());
             /*
                 TODO: Don't convert password char[] to String.
                 The whole purpose behind keeping the password in a char[] is
                 so that it can be zeroed out in the heap when its no longer
                 needed.
-                Unfortunately Church Community Builder decided to send the
+                Originally, Church Community Builder decided to send the
                 user's password, among other sensitive fields, as a query
-                parameter. Since the query string has to be a String, I'll go
-                ahead and convert the password to String here.
-                The library's public interface will use char[] to make the
-                switch easier if CCB provides a more sane alternative.
+                parameter. Since the query string had to be a String, I
+                converted the password to String here.
+                CCB has since switched to POST. But there was no grace period
+                to ease the transition. In the interest of fixing the site
+                quickly, I'm leaving this TODO incomplete for now.
              */
-            params.put("password", new String(request.getPassword()));
+            loginform.appendField("password", new String(request.getPassword()));
+            form = loginform.build();
 
         } else if (request.getRoutingNumber() != null && request.getAccountNumber() != null) {
             // Use individual_profile_from_micr (account_number, routing_number)
@@ -123,7 +130,7 @@ public class CCBAPIClient implements CCBAPI {
         }
 
         // Send the request and parse the response.
-        return makeRequest(serviceName, params, null, GetIndividualProfilesResponse.class);
+        return makeRequest(serviceName, params, form, GetIndividualProfilesResponse.class);
     }
 
     @Override

@@ -8,7 +8,7 @@ Process
 
 1. Increment the version number appropriately. Use [Semantic Versioning](http://semver.org/).
 
-        VERSION=1.1
+        VERSION=1.2
         mvn versions:set -DnewVersion=$VERSION
 
 2. Verify the release to make sure all is well.
@@ -35,7 +35,7 @@ Process
 
 7. Prepare the master branch for the next release by incrementing the version number.
 
-        VERSION=1.2-SNAPSHOT
+        VERSION=1.3-SNAPSHOT
         mvn versions:set -DnewVersion=$VERSION
         git commit -am "Incrementing the version to $VERSION"
         git push origin master

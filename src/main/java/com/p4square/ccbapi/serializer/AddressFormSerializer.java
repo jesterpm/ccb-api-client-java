@@ -8,7 +8,14 @@ import java.net.URLEncoder;
 /**
  * Encode an Address object as form data for CCB.
  */
-public class AddressFormSerializer extends AbstractFormSerializer<Address> {
+public class AddressFormSerializer implements Serializer<Address> {
+
+    @Override
+    public String encode(final Address address) {
+        final StringBuilder sb = new StringBuilder();
+        encode(address, sb);
+        return sb.toString();
+    }
 
     @Override
     public void encode(final Address address, final StringBuilder builder) {

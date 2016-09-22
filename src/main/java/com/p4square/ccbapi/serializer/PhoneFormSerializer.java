@@ -7,7 +7,7 @@ import com.p4square.ccbapi.model.Phone;
  */
 public class PhoneFormSerializer extends AbstractFormSerializer<Phone> {
     @Override
-    public void encode(final Phone phone, final StringBuilder builder) {
+    public void encode(final Phone phone, final FormBuilder builder) {
         // Sanity check.
         if (phone.getType() == null) {
             throw new IllegalArgumentException("Phone type cannot be null");
@@ -19,6 +19,6 @@ public class PhoneFormSerializer extends AbstractFormSerializer<Phone> {
         } else {
             key = phone.getType().toString().toLowerCase() + "_phone";
         }
-        appendField(builder, key, phone.getNumber());
+        builder.appendField(key, phone.getNumber());
     }
 }

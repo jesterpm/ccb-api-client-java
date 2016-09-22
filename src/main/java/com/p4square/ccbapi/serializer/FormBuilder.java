@@ -7,45 +7,58 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * AbstractFormSerializer provides default implementations for some methods defined in Serializer
- * and methods to support encoding form data for CCB.
+ * Utility for building URL encoded form payloads.
  */
-public abstract class AbstractFormSerializer<T> implements Serializer<T> {
+public class FormBuilder {
 
     /**
      * This is the datetime format specified by the CCB API Doc.
      */
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    @Override
-    public String encode(final T obj) {
-        final StringBuilder sb = new StringBuilder();
-        encode(obj, sb);
-        return sb.toString();
-    }
+    private final StringBuilder builder;
 
-    @Override
-    public void encode(final T obj, final StringBuilder sb) {
-        FormBuilder builder = new FormBuilder(sb);
-        encode(obj, builder);
+    /**
+     * Construct a new FormBuilder.
+     */
+    public FormBuilder() {
+        this(new StringBuilder());
     }
 
     /**
-     * This method performs the actual serialize of T into a URL encoded form.
+     * Construct a new FormBuilder which will append fields to the given StringBuilder.
      *
-     * @param obj The object to serialize
-     * @param builder The FormBuilder to use.
+     * @param builder The StringBuilder to append to.
      */
-    protected abstract void encode(final T obj, final FormBuilder builder);
+    public FormBuilder(StringBuilder builder) {
+        this.builder = builder;
+    }
+
+    /**
+     * This methods provides access to the StringBuilder.
+     *
+     * @return The StringBuilder passed in at construct time.
+     */
+    public StringBuilder getStringBuilder() {
+        return builder;
+    }
+
+    /**
+     * Build the entire URL encoded form.
+     *
+     * @return All form fields as a URL encoded string.
+     */
+    public String build() {
+        return builder.toString();
+    }
 
     /**
      * Append a field to the form.
      *
-     * @param builder The StringBuilder to use.
      * @param key The form key, which must be URLEncoded before calling this method.
      * @param value The value associated with the key. The value will be URLEncoded by this method.
      */
-    protected void appendField(final StringBuilder builder, final String key, final String value) {
+    public void appendField(final String key, final String value) {
         if (builder.length() > 0) {
             builder.append("&");
         }
@@ -60,11 +73,10 @@ public abstract class AbstractFormSerializer<T> implements Serializer<T> {
     /**
      * Append an integer field to the form.
      *
-     * @param builder The StringBuilder to use.
      * @param key The form key, which must be URLEncoded before calling this method.
      * @param value The value associated with the key.
      */
-    protected void appendField(final StringBuilder builder, final String key, final int value) {
+    public void appendField(final String key, final int value) {
         if (builder.length() > 0) {
             builder.append("&");
         }
@@ -74,11 +86,10 @@ public abstract class AbstractFormSerializer<T> implements Serializer<T> {
     /**
      * Append a boolean field to the form.
      *
-     * @param builder The StringBuilder to use.
      * @param key The form key, which must be URLEncoded before calling this method.
      * @param value The value associated with the key.
      */
-    protected void appendField(final StringBuilder builder, final String key, final boolean value) {
+    public void appendField(final String key, final boolean value) {
         if (builder.length() > 0) {
             builder.append("&");
         }
@@ -88,23 +99,21 @@ public abstract class AbstractFormSerializer<T> implements Serializer<T> {
     /**
      * Append a LocalDate field to the form.
      *
-     * @param builder The StringBuilder to use.
      * @param key The form key, which must be URLEncoded before calling this method.
      * @param value The value associated with the key.
      */
-    protected void appendField(final StringBuilder builder, final String key, final LocalDate value) {
-        appendField(builder, key, value.toString());
+    public void appendField(final String key, final LocalDate value) {
+        appendField(key, value.toString());
 
     }
 
     /**
      * Append a LocalDateTime field to the form.
      *
-     * @param builder The StringBuilder to use.
      * @param key The form key, which must be URLEncoded before calling this method.
      * @param value The value associated with the key.
      */
-    protected void appendField(final StringBuilder builder, final String key, final LocalDateTime value) {
-        appendField(builder, key, DATE_TIME_FORMAT.format(value));
+    public void appendField(final String key, final LocalDateTime value) {
+        appendField(key, DATE_TIME_FORMAT.format(value));
     }
 }

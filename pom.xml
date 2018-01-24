@@ -6,7 +6,7 @@
 
     <groupId>com.p4square</groupId>
     <artifactId>ccbapi</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
 
     <name>cbb-api-java-client</name>
     <description>An unofficial Java library for accessing the Church Community Builder API.</description>

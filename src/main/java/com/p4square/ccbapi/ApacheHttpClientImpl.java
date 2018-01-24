@@ -4,35 +4,26 @@ import com.p4square.ccbapi.exception.CCBException;
 import com.p4square.ccbapi.exception.CCBRetryableErrorException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.impl.client.*;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * ApacheHttpClientImpl is an implementation of HTTPInterface which uses the Apache HTTP Client library.
  */
 public class ApacheHttpClientImpl implements HTTPInterface {
 
-    private final DefaultHttpClient httpClient;
+    private final CloseableHttpClient httpClient;
 
     public ApacheHttpClientImpl(final URI apiBaseUri, final String username, final String password) {
-        // Create the HTTP client.
-        this.httpClient = new DefaultHttpClient();
-
         // Prepare the CredentialsProvider for the HTTP Client.
         int port = apiBaseUri.getPort();
         if (port == -1) {
@@ -44,13 +35,20 @@ public class ApacheHttpClientImpl implements HTTPInterface {
                 throw new IllegalArgumentException("Cannot determine port for unknown scheme.");
             }
         }
-        this.httpClient.getCredentialsProvider().setCredentials(new AuthScope(apiBaseUri.getHost(), port),
-                                                                new UsernamePasswordCredentials(username, password));
+
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(apiBaseUri.getHost(), port),
+                new UsernamePasswordCredentials(username, password));
+
+        this.httpClient = HttpClients.custom()
+                .setDefaultCredentialsProvider(credsProvider)
+                .build();
     }
 
     @Override
     public void close() throws IOException {
-        httpClient.getConnectionManager().shutdown();
+        httpClient.close();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.p4square.ccbapi.model;
 
 import javax.xml.bind.annotation.*;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +22,10 @@ public class GroupProfile {
     private String description;
 
     @XmlElement(name="image")
-    private URL imageUrl;
+    private String imageUrl;
 
     @XmlElement(name="calendar_feed")
-    private URL calendarFeedUrl;
+    private String calendarFeedUrl;
 
     @XmlElement(name="main_leader")
     private IndividualProfile mainLeader;
@@ -93,10 +92,10 @@ public class GroupProfile {
     private Reference area;
 
     @XmlElement(name="meeting_day")
-    private Reference meeting_day;
+    private Reference meetingDay;
 
     @XmlElement(name="meeting_time")
-    private Reference meeting_time;
+    private Reference meetingTime;
 
     @XmlElement(name="creator")
     private IndividualReference createdBy;
@@ -141,19 +140,19 @@ public class GroupProfile {
         this.description = description;
     }
 
-    public URL getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(URL imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    public URL getCalendarFeedUrl() {
+    public String getCalendarFeedUrl() {
         return calendarFeedUrl;
     }
 
-    public void setCalendarFeedUrl(URL calendarFeedUrl) {
+    public void setCalendarFeedUrl(String calendarFeedUrl) {
         this.calendarFeedUrl = calendarFeedUrl;
     }
 
@@ -205,12 +204,24 @@ public class GroupProfile {
         this.currentMembers = currentMembers;
     }
 
-    public String getGroupCapacity() {
-        return groupCapacity;
+    public Integer getGroupCapacity() {
+        if (isGroupCapacityUnlimited()) {
+            return null;
+        } else {
+            return Integer.valueOf(this.groupCapacity);
+        }
     }
 
-    public void setGroupCapacity(String groupCapacity) {
-        this.groupCapacity = groupCapacity;
+    public boolean isGroupCapacityUnlimited() {
+        return this.groupCapacity == null || "Unlimited".equals(this.groupCapacity);
+    }
+
+    public void setGroupCapacity(Integer groupCapacity) {
+        if (groupCapacity == null) {
+            this.groupCapacity = "Unlimited";
+        } else {
+            this.groupCapacity = groupCapacity.toString();
+        }
     }
 
     public List<Address> getAddresses() {
@@ -317,20 +328,20 @@ public class GroupProfile {
         this.area = area;
     }
 
-    public Reference getMeeting_day() {
-        return meeting_day;
+    public Reference getMeetingDay() {
+        return meetingDay;
     }
 
-    public void setMeeting_day(Reference meeting_day) {
-        this.meeting_day = meeting_day;
+    public void setMeetingDay(Reference meetingDay) {
+        this.meetingDay = meetingDay;
     }
 
-    public Reference getMeeting_time() {
-        return meeting_time;
+    public Reference getMeetingTime() {
+        return meetingTime;
     }
 
-    public void setMeeting_time(Reference meeting_time) {
-        this.meeting_time = meeting_time;
+    public void setMeetingTime(Reference meetingTime) {
+        this.meetingTime = meetingTime;
     }
 
     public IndividualReference getCreatedBy() {

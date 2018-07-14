@@ -79,7 +79,7 @@ public class GetGroupProfilesResponseTest extends XmlBinderTestBase {
         assertEquals(false, group.isChildcareProvided());
         assertEquals(true, group.isListed());
         assertEquals(true, group.isPublicSearchListed());
-        assertEquals(false, group.isInactive());
+        assertEquals(true, group.isActive());
         assertEquals(true, group.isNotification());
         assertEquals(InteractionType.MEMBERS_INTERACT, group.getInteractionType());
         assertEquals(MembershipType.MODERATED, group.getMembershipType());

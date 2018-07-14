@@ -256,12 +256,12 @@ public class GroupProfile {
         this.publicSearchListed = publicSearchListed;
     }
 
-    public boolean isInactive() {
-        return inactive;
+    public boolean isActive() {
+        return !inactive;
     }
 
-    public void setInactive(boolean inactive) {
-        this.inactive = inactive;
+    public void setActive(boolean active) {
+        this.inactive = !inactive;
     }
 
     public boolean isNotification() {

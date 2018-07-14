@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccb_api>
+    <request>
+        <parameters>
+            <argument value="group_search" name="srv"/>
+        </parameters>
+    </request>
+    <response>
+        <service>group_search</service>
+        <service_action>execute</service_action>
+        <availability>public</availability>
+        <items count="1">
+            <item>
+                <item_id type="groups">750</item_id>
+                <id>750</id>
+                <name>Adamant by Lisa Bevere Book Study</name>
+                <group_type_name>Community</group_type_name>
+                <grouping_name>Adults</grouping_name>
+                <area_name ccb_id="18">Puyallup</area_name>
+                <meet_day_name>Tuesday</meet_day_name>
+                <meet_time_name>7:00 pm</meet_time_name>
+                <description>What is the truth?&#13;
+                    &#13;
+                    This has become the defining question of our time. But while everyone has an opinion, truth, it seems, is getting harder and harder to find. Perhaps that's because we are searching for something when we should be looking for someone. &#13;
+                    &#13;
+                    Truth has a name.&#13;
+                    &#13;
+                    More ancient than time and more present than this moment, the truth is not a river that changes with the cultural currents, but a rock--immovable, invincible, unshakeable--and the cornerstone of all we are and ever dream to be.&#13;
+                    &#13;
+                    100 79588    0 79588    0     0  39774      0 --:--:--  0:00:02 -Theologically deep yet intimately accessible. Adamant will be an anchor for your soul in a raging sea of opinions, giving you a clear sense of direction in a wandering world.&#13;
+                    Every Other Tuesday Beginning in September 2018</description>
+                <status_id>1</status_id>
+                <messaging_type>Interact</messaging_type>
+                <membership_type>Request</membership_type>
+                <owner_name ccb_id="26102">Jane Doe</owner_name>
+                <owner_email_primary>jane.doe@example.com</owner_email_primary>
+            </item>
+
+        </items>
+    </response>
+</ccb_api>
